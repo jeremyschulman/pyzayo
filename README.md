@@ -21,4 +21,18 @@ You must export two environment variables for use with this library:
   
 You must obtain these values from Zayo.  
 
+# Quick Start
 
+```python
+from pyzayo import ZayoMtcClient
+
+# create a client and authenticate using the ZAYO_ variables
+zmtc = ZayoMtcClient()
+
+# use the instance methods to retrieve data
+cases = zmtc.get_cases()
+```
+
+# Documentation
+
+For now the ZayoMtClient docstrings.  More docs coming soon.
