@@ -26,7 +26,7 @@ You must obtain these values from Zayo.
 ```python
 from pyzayo import ZayoMtcClient
 
-# create a client and authenticate using the ZAYO_ variables
+# create a client to the Maintenace API authenticate using the ZAYO_ variables
 zmtc = ZayoMtcClient()
 
 # use the instance methods to retrieve data
