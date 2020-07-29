@@ -5,12 +5,13 @@ API system.
 
 # Installation
 
-This package is not in PyPI as this time.  You will need to install it directly
-from github using:
+This package is not in PyPI as this time.  You can install it directly from
+github using:
 
 ```bash
-git clone git+
+pip install -e git+https://github.com/jeremyschulman/pyzayo.git#egg=pyzayo
 ```
+
 # Before You Begin
 
 You must export two environment variables for use with this library:
