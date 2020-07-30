@@ -17,9 +17,9 @@ MAX_TOP_COUNT = 50
 
 
 class NotificationTypes(Enum):
-    scheduled = 'Scheduled'
-    rescheduled = 'Rescheduled'
-    started = 'Maintenance Started'
-    stopped = 'Maintenance Stopped'
-    completed = 'Maintenance Completed'
-    cancelled = 'Cancelled'
+    scheduled = "Scheduled"
+    rescheduled = "Rescheduled"
+    started = "Maintenance Started"
+    stopped = "Maintenance Stopped"
+    completed = "Maintenance Completed"
+    cancelled = "Cancelled"

@@ -18,8 +18,8 @@ You must export two environment variables for use with this library:
 
   * `ZAYO_CLIENT_ID` - Your unique client ID value
   * `ZAYO_CLIENT_SECRET` - Your unique client secret value
-  
-You must obtain these values from Zayo.  
+
+You must obtain these values from Zayo.
 
 # Quick Start
 

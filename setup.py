@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from setuptools import setup, find_packages
-from itertools import chain
 
 package_name = "pyzayo"
 package_version = open("VERSION").read().strip()
@@ -25,7 +24,6 @@ def requirements(filename="requirements.txt"):
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
-
 
 
 # -----------------------------------------------------------------------------

@@ -7,10 +7,20 @@ from pyzayo import consts
 
 
 class ZayoMtcClient(ZayoClient):
+    """
+    This class defines the Zayo Maintenace API client instance.
+
+    References
+    ----------
+    API documentation:
+    http://54.149.224.75/wp-content/uploads/2020/03/Maintenance-Cases-Wiki.pdf
+    """
+
     def __init__(self):
         super(ZayoMtcClient, self).__init__()
-        self.api = ZayoAPI(base_url=consts.ZAYO_URL_SM,
-                           access_token=self._auth_payload['access_token'])
+        self.api = ZayoAPI(
+            base_url=consts.ZAYO_URL_SM, access_token=self._auth_payload["access_token"]
+        )
 
     def get_cases(self, **params) -> List[Dict]:
         """
@@ -63,13 +73,10 @@ class ZayoMtcClient(ZayoClient):
 
         return self.get_records(
             url=consts.ZAYO_SM_ROUTE_MTC_IMPACTS,
-            params={
-                'filter': req_filter,
-                **params
-            }
+            params={"filter": req_filter, **params},
         )
 
-    def get_notifs(self, by_case_num) -> List[Dict]:
+    def get_notifications(self, by_case_num) -> List[Dict]:
         """
         Get notifications by case number.
 
@@ -84,15 +91,17 @@ class ZayoMtcClient(ZayoClient):
         """
         loop = asyncio.get_event_loop()
 
-        res = loop.run_until_complete(self.api.get(
-            url=consts.ZAYO_SM_ROUTE_MTC_NOTIFS_BY_CASE.format(case_num=by_case_num)
-        ))
+        res = loop.run_until_complete(
+            self.api.get(
+                url=consts.ZAYO_SM_ROUTE_MTC_NOTIFS_BY_CASE.format(case_num=by_case_num)
+            )
+        )
 
         res.raise_for_status()
         body = res.json()
-        return body['data']
+        return body["data"]
 
-    def get_notifs_details(self, by_name: str) -> Dict:
+    def get_notification_details(self, by_name: str) -> Dict:
         """
         For a given ntoficication by "name" return the details dictionary.
 
@@ -107,10 +116,12 @@ class ZayoMtcClient(ZayoClient):
         """
         loop = asyncio.get_event_loop()
 
-        res = loop.run_until_complete(self.api.get(
-            url=consts.ZAYO_SM_ROUTE_MTC_NOTIFS_BY_NAME.format(name=by_name)
-        ))
+        res = loop.run_until_complete(
+            self.api.get(
+                url=consts.ZAYO_SM_ROUTE_MTC_NOTIFS_BY_NAME.format(name=by_name)
+            )
+        )
 
         res.raise_for_status()
         body = res.json()
-        return body['data']
+        return body["data"]
