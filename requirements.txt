@@ -2,3 +2,4 @@ httpx
 tenacity
 click
 tabulate
+rich

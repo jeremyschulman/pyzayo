@@ -45,6 +45,28 @@ class OrderBy(Enum):
     least_recent = "primaryDate asc"
 
 
+class CaseUrgency(Enum):
+    """
+    Used by the Cases `urgency` field
+    """
+    planned = "Planned"
+    emergency = "Emergency"
+    demand = "Demand"
+
+
+class CaseStatus(Enum):
+    """
+    Used by case record `status` field
+    """
+    closed = "Closed"
+    scheduled = "Scheduled"
+
+
+class CaseImpact(Enum):
+    potential_svc_aff = "Potential Service Affecting"
+    svc_aff = "Service Affecting"
+
+
 REQ_MOST_RECENT = {"paging": {"top": 1}, "orderBy": [OrderBy.most_recent.value]}
 
 REQ_OLDEST = {"paging": {"top": 1}, "orderBy": [OrderBy.least_recent.value]}
