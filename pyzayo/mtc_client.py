@@ -1,7 +1,6 @@
 from typing import List, Dict
 import asyncio
 
-from pyzayo.api import ZayoAPI
 from pyzayo.client import ZayoClient
 from pyzayo import consts
 
@@ -17,10 +16,7 @@ class ZayoMtcClient(ZayoClient):
     """
 
     def __init__(self):
-        super(ZayoMtcClient, self).__init__()
-        self.api = ZayoAPI(
-            base_url=consts.ZAYO_URL_SM, access_token=self._auth_payload["access_token"]
-        )
+        super(ZayoMtcClient, self).__init__(base_url=consts.ZAYO_URL_SM)
 
     def get_cases(self, **params) -> List[Dict]:
         """
@@ -38,7 +34,7 @@ class ZayoMtcClient(ZayoClient):
         -------
         List[Dict]
         """
-        return self.get_records(url=consts.ZAYO_SM_ROUTE_MTC_CASES, params=params)
+        return self.paginate_records(url=consts.ZAYO_SM_ROUTE_MTC_CASES, params=params)
 
     def get_impacts(self, by_circuit_id=None, by_case_num=None, **params) -> List[Dict]:
         """
@@ -71,7 +67,7 @@ class ZayoMtcClient(ZayoClient):
         else:
             req_filter = {}
 
-        return self.get_records(
+        return self.paginate_records(
             url=consts.ZAYO_SM_ROUTE_MTC_IMPACTS,
             params={"filter": req_filter, **params},
         )
@@ -83,7 +79,7 @@ class ZayoMtcClient(ZayoClient):
         Parameters
         ----------
         by_case_num: str
-            The case number to match
+            The case number to match, begins with "TTN-"
 
         Returns
         -------
