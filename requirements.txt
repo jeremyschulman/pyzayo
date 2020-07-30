@@ -1,2 +1,4 @@
 httpx
 tenacity
+click
+tabulate
