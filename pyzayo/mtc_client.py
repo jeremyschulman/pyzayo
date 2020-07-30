@@ -1,8 +1,39 @@
+"""
+This module contains the Zayo API client for accessing the Maintenance
+endpoints.
+
+References
+----------
+API documentation:
+    http://54.149.224.75/wp-content/uploads/2020/03/Maintenance-Cases-Wiki.pdf
+"""
+
+# -----------------------------------------------------------------------------
+# System Imports
+# -----------------------------------------------------------------------------
+
 from typing import List, Dict
 import asyncio
 
+# -----------------------------------------------------------------------------
+# Private Imports
+# -----------------------------------------------------------------------------
+
 from pyzayo.client import ZayoClient
 from pyzayo import consts
+
+# -----------------------------------------------------------------------------
+# Package Exports
+# -----------------------------------------------------------------------------
+
+__all__ = ["ZayoMtcClient"]
+
+
+# -----------------------------------------------------------------------------
+#
+#                               CODE BEGINS
+#
+# -----------------------------------------------------------------------------
 
 
 class ZayoMtcClient(ZayoClient):
@@ -16,6 +47,7 @@ class ZayoMtcClient(ZayoClient):
     """
 
     def __init__(self):
+        """ setup client to use the Maintenace base URL """
         super(ZayoMtcClient, self).__init__(base_url=consts.ZAYO_URL_SM)
 
     def get_cases(self, **params) -> List[Dict]:

@@ -1,3 +1,7 @@
+"""
+This file contains _constants_ used by this package.
+"""
+
 from enum import Enum
 
 # URL for authorizing client crendentials and obtaining an access token
@@ -18,7 +22,12 @@ ZAYO_SM_ROUTE_MTC_NOTIFS_BY_NAME = "maintenance-cases/notifications/{name}"
 MAX_TOP_COUNT = 50
 MAX_PAGED_RECORDS = 100
 
+
 class NotificationTypes(Enum):
+    """
+    Used by the notification API endpoints
+    """
+
     scheduled = "Scheduled"
     rescheduled = "Rescheduled"
     started = "Maintenance Started"
@@ -28,20 +37,14 @@ class NotificationTypes(Enum):
 
 
 class OrderBy(Enum):
-    most_recent = 'primaryDate desc'
-    least_recent = 'primaryDate asc'
+    """
+    Used for any API supporting the `orderBy` criteria
+    """
+
+    most_recent = "primaryDate desc"
+    least_recent = "primaryDate asc"
 
 
-REQ_MOST_RECENT = {
-    'paging': {
-        'top': 1
-    },
-    'orderBy': [OrderBy.most_recent.value]
-}
+REQ_MOST_RECENT = {"paging": {"top": 1}, "orderBy": [OrderBy.most_recent.value]}
 
-REQ_OLDEST = {
-    'paging': {
-        'top': 1
-    },
-    'orderBy': [OrderBy.least_recent.value]
-}
+REQ_OLDEST = {"paging": {"top": 1}, "orderBy": [OrderBy.least_recent.value]}

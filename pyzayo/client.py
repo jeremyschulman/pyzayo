@@ -1,15 +1,39 @@
-from typing import Optional, List, Dict
+# -----------------------------------------------------------------------------
+# System Imports
+# -----------------------------------------------------------------------------
 
+from typing import Optional, List, Dict
 import math
 from os import getenv
 import asyncio
 from itertools import chain
 
+# -----------------------------------------------------------------------------
+# Public Imports
+# -----------------------------------------------------------------------------
+
 import httpx
 from tenacity import retry, wait_random_exponential, retry_if_exception
 
+# -----------------------------------------------------------------------------
+# Private Imports
+# -----------------------------------------------------------------------------
+
+
 from pyzayo import consts
 from pyzayo.api import ZayoAPI
+
+# -----------------------------------------------------------------------------
+# Package Exports
+# -----------------------------------------------------------------------------
+
+__all__ = ["ZayoClient"]
+
+# -----------------------------------------------------------------------------
+#
+#                               CODE BEGINS
+#
+# -----------------------------------------------------------------------------
 
 
 class ZayoClient(object):
@@ -22,11 +46,25 @@ class ZayoClient(object):
     def __init__(self, base_url: str):
         self._auth_payload: Optional[dict] = None
         self.authenticate()
-        self.api = ZayoAPI(
-            base_url=base_url, access_token=self._auth_payload["access_token"]
-        )
+        self.api = ZayoAPI(base_url=base_url, access_token=self.access_token)
+
+    @property
+    def access_token(self):
+        return self._auth_payload["access_token"]
 
     def authenticate(self):
+        """
+        This method is used to authenticate to the Zayo API system using the
+        client-id and client-secret values obtained from the environment.
+
+        This method is called during instance initialization and the access
+        token can be obtained via the `access_token` property.
+
+        Notes
+        -----
+        According to the Zayo API documentation, a token is valid for 1hr. Plan
+        accordingly.
+        """
         client_id = getenv("ZAYO_CLIENT_ID")
         client_secret = getenv("ZAYO_CLIENT_SECRET")
         payload = {
@@ -101,8 +139,8 @@ class ZayoClient(object):
         List of records, each dict schema is specific to the url.
         """
         if params:
-            paging = params.setdefault('paging', {})
-            page_sz = paging.setdefault('top', consts.MAX_TOP_COUNT)
+            paging = params.setdefault("paging", {})
+            page_sz = paging.setdefault("top", consts.MAX_TOP_COUNT)
         else:
             page_sz = consts.MAX_TOP_COUNT
             params = dict(paging=dict(top=page_sz, skip=0))
@@ -121,19 +159,23 @@ class ZayoClient(object):
 
         @retry(
             retry=retry_if_exception(httpx.ReadTimeout),
-            wait=wait_random_exponential(multiplier=1, max=10)
+            wait=wait_random_exponential(multiplier=1, max=10),
         )
         async def get_page(payload):
             return await self.api.post(url, json=payload)
 
         for page in range(total_pages):
             task_params = params.copy()
-            task_params['paging'] = {'top': page_sz, 'skip': (page*page_sz)}
+            task_params["paging"] = {"top": page_sz, "skip": (page * page_sz)}
             tasks.append(get_page(task_params))
 
-        http_res_list = loop.run_until_complete(asyncio.gather(*tasks, return_exceptions=True))
-        return list(chain.from_iterable(
-            resp.json()['data']['records']
-            for resp in http_res_list
-            if resp.is_error is False
-        ))
+        http_res_list = loop.run_until_complete(
+            asyncio.gather(*tasks, return_exceptions=True)
+        )
+        return list(
+            chain.from_iterable(
+                resp.json()["data"]["records"]
+                for resp in http_res_list
+                if resp.is_error is False
+            )
+        )
