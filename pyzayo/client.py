@@ -4,8 +4,6 @@ from os import getenv
 import asyncio
 
 import httpx
-
-from pyzayo.api import ZayoAPI
 from pyzayo import consts
 
 
@@ -31,18 +29,24 @@ class ZayoClient(object):
         res.raise_for_status()
         self._auth_payload = res.json()
 
-    def get_records(self, url, payload=None):
+    def get_count(self, url, **params):
+        loop = asyncio.get_event_loop()
+        res = loop.run_until_complete(self.api.post(url, json=params))
+        res.raise_for_status()
+        return res.json()['data']['metadata']['totalRecordCount']
+
+    def get_records(self, url, params=None):
         page_sz = consts.MAX_TOP_COUNT
 
-        default_payload = dict(paging=dict(
+        default_params = dict(paging=dict(
             top=page_sz,
             skip=0
         ))
 
         loop = asyncio.get_event_loop()
 
-        # get the first payload of records and then determine if there are more
-        res = loop.run_until_complete(self.api.post(url, json=payload or default_payload))
+        # get the first params of records and then determine if there are more
+        res = loop.run_until_complete(self.api.post(url, json=params or default_params))
         res.raise_for_status()
         body = res.json()
         metadata = body['data']['metadata']
@@ -52,48 +56,3 @@ class ZayoClient(object):
         return records
 
 
-class ZayoMtcClient(ZayoClient):
-    def __init__(self):
-        super(ZayoMtcClient, self).__init__()
-        self.api = ZayoAPI(base_url=consts.ZAYO_URL_SM,
-                           access_token=self._auth_payload['access_token'])
-
-    def get_cases(self, **params):
-        return self.get_records(url=consts.ZAYO_SM_ROUTE_MTC_CASES)
-
-    def get_impacts(self, by_circuit_id=None, by_case_num=None, **params):
-        if by_case_num:
-            req_filter = dict(caseNumber=by_case_num)
-        elif by_circuit_id:
-            req_filter = dict(circuitId=by_circuit_id)
-        else:
-            req_filter = None
-
-        return self.get_records(
-            url=consts.ZAYO_SM_ROUTE_MTC_IMPACTS,
-            payload={
-                'filter': req_filter,
-            }
-        )
-
-    def get_notifs(self, by_case_num):
-        loop = asyncio.get_event_loop()
-
-        res = loop.run_until_complete(self.api.get(
-            url=consts.ZAYO_SM_ROUTE_MTC_NOTIFS_BY_CASE.format(case_num=by_case_num)
-        ))
-
-        res.raise_for_status()
-        body = res.json()
-        return body
-
-    def get_notifs_details(self, by_name: str):
-        loop = asyncio.get_event_loop()
-
-        res = loop.run_until_complete(self.api.get(
-            url=consts.ZAYO_SM_ROUTE_MTC_NOTIFS_BY_NAME.format(name=by_name)
-        ))
-
-        res.raise_for_status()
-        body = res.json()
-        return body

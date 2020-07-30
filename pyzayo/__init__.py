@@ -1,1 +1,1 @@
-from pyzayo.client import ZayoMtcClient
+from pyzayo.mtc_client import ZayoMtcClient

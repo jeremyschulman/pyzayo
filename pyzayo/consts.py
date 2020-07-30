@@ -1,3 +1,5 @@
+from enum import Enum
+
 ZAYO_URL_AUTH = "https://auth.testzayo.com/oauth/token"
 
 # WARNING: base URL must end with "/"
@@ -12,3 +14,12 @@ ZAYO_SM_ROUTE_MTC_NOTIFS_BY_NAME = "maintenance-cases/notifications/{name}"
 
 # The Zayo API has a maximum "top" count of 50 records
 MAX_TOP_COUNT = 50
+
+
+class NotificationTypes(Enum):
+    scheduled = 'Scheduled'
+    rescheduled = 'Rescheduled'
+    started = 'Maintenance Started'
+    stopped = 'Maintenance Stopped'
+    completed = 'Maintenance Completed'
+    cancelled = 'Cancelled'
