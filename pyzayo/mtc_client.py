@@ -66,7 +66,7 @@ class ZayoMtcClient(ZayoClient):
         -------
         List[Dict]
         """
-        return self.paginate_records(url=consts.ZAYO_SM_ROUTE_MTC_CASES, params=params)
+        return self.paginate_records(url=consts.ZAYO_SM_ROUTE_MTC_CASES, **params)
 
     def get_impacts(self, by_circuit_id=None, by_case_num=None, **params) -> List[Dict]:
         """
@@ -99,10 +99,8 @@ class ZayoMtcClient(ZayoClient):
         else:
             req_filter = {}
 
-        return self.paginate_records(
-            url=consts.ZAYO_SM_ROUTE_MTC_IMPACTS,
-            params={"filter": req_filter, **params},
-        )
+        params = {"filter": req_filter, **params}
+        return self.paginate_records(url=consts.ZAYO_SM_ROUTE_MTC_IMPACTS, **params)
 
     def get_notifications(self, by_case_num) -> List[Dict]:
         """

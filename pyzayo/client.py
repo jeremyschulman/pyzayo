@@ -105,8 +105,7 @@ class ZayoClient(object):
 
         payload = params.copy()
         payload["paging"] = {"top": 0}
-
-        res = loop.run_until_complete(self.api.post(url, json=params))
+        res = loop.run_until_complete(self.api.post(url, json=payload))
         res.raise_for_status()
         return res.json()["data"]["metadata"]["totalRecordCount"]
 
