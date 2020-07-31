@@ -24,10 +24,10 @@ You must obtain these values from Zayo.
 # Quick Start
 
 ```python
-from pyzayo import ZayoMatenanceMixin
+from pyzayo import ZayoClient
 
 # create a client to the Maintenace API authenticate using the ZAYO_ variables
-zmtc = ZayoMatenanceMixin()
+zmtc = ZayoClient()
 
 # use the instance methods to retrieve data
 cases = zmtc.get_cases()
