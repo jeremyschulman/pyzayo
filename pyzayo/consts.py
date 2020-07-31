@@ -6,10 +6,7 @@ from enum import Enum
 
 # Environment variables
 
-Env = {
-    'client_id': 'ZAYO_CLIENT_ID',
-    'client_secret': 'ZAYO_CLIENT_SECRET'
-}
+Env = {"client_id": "ZAYO_CLIENT_ID", "client_secret": "ZAYO_CLIENT_SECRET"}
 
 # URL for authorizing client crendentials and obtaining an access token
 ZAYO_URL_AUTH = "https://auth.testzayo.com/oauth/token"
@@ -56,6 +53,7 @@ class CaseUrgency(Enum):
     """
     Used by the Cases `urgency` field
     """
+
     planned = "Planned"
     emergency = "Emergency"
     demand = "Demand"
@@ -65,6 +63,7 @@ class CaseStatus(Enum):
     """
     Used by case record `status` field
     """
+
     closed = "Closed"
     scheduled = "Scheduled"
 
@@ -75,5 +74,4 @@ class CaseImpact(Enum):
 
 
 REQ_MOST_RECENT = {"paging": {"top": 1}, "orderBy": [OrderBy.most_recent.value]}
-
 REQ_OLDEST = {"paging": {"top": 1}, "orderBy": [OrderBy.least_recent.value]}

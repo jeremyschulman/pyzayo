@@ -1,5 +1,6 @@
 httpx
+pydantic
 tenacity
 click
-tabulate
 rich
+first

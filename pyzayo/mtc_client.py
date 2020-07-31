@@ -16,6 +16,12 @@ from typing import List, Dict
 import asyncio
 
 # -----------------------------------------------------------------------------
+# Public Imports
+# -----------------------------------------------------------------------------
+
+from first import first
+
+# -----------------------------------------------------------------------------
 # Private Imports
 # -----------------------------------------------------------------------------
 
@@ -67,6 +73,12 @@ class ZayoMtcClient(ZayoClient):
         List[Dict]
         """
         return self.paginate_records(url=consts.ZAYO_SM_ROUTE_MTC_CASES, **params)
+
+    def get_case(self, by_case_num: str) -> Dict:
+        recs = self.paginate_records(
+            url=consts.ZAYO_SM_ROUTE_MTC_CASES, filter={"caseNumber": by_case_num}
+        )
+        return first(recs)
 
     def get_impacts(self, by_circuit_id=None, by_case_num=None, **params) -> List[Dict]:
         """
