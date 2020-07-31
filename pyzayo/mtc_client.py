@@ -16,6 +16,12 @@ from typing import List, Dict
 import asyncio
 
 # -----------------------------------------------------------------------------
+# Public Imports
+# -----------------------------------------------------------------------------
+
+from first import first
+
+# -----------------------------------------------------------------------------
 # Private Imports
 # -----------------------------------------------------------------------------
 
@@ -67,6 +73,48 @@ class ZayoMtcClient(ZayoClient):
         List[Dict]
         """
         return self.paginate_records(url=consts.ZAYO_SM_ROUTE_MTC_CASES, **params)
+
+    def get_case(self, by_case_num: str) -> Dict:
+        recs = self.paginate_records(
+            url=consts.ZAYO_SM_ROUTE_MTC_CASES, filter={"caseNumber": by_case_num}
+        )
+        return first(recs)
+
+    def get_case_details(self, by_case_num: str):
+        """
+        This method will obtain all of the impact and notification details
+        associated with a given case number.
+
+        Parameters
+        ----------
+        by_case_num: str
+            The case number, starts with "TNN-"
+
+        Returns
+        -------
+        Tuple [case, impacts, notifs_details]
+            case: dict
+                The case records
+
+            impacts: list[dict]
+                List of impact records
+
+            notifs_details: list[dict]
+                List of notificaiton detail records
+        """
+        case = self.get_case(by_case_num=by_case_num)
+
+        if not case:
+            return None, None, None
+
+        impacts = self.get_impacts(by_case_num=by_case_num)
+
+        notif_details = [
+            self.get_notification_details(by_name=notif["name"])
+            for notif in self.get_notifications(by_case_num=by_case_num)
+        ]
+
+        return case, impacts, notif_details
 
     def get_impacts(self, by_circuit_id=None, by_case_num=None, **params) -> List[Dict]:
         """

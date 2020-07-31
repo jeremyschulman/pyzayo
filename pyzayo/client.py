@@ -154,7 +154,7 @@ class ZayoClient(object):
         total_pages = math.ceil(max_recs / page_sz)
 
         tasks = list()
-        print(f"paging total records {max_recs} pages {total_pages} of size {page_sz}")
+        # print(f"paging total records {max_recs} pages {total_pages} of size {page_sz}")
 
         @retry(
             retry=retry_if_exception(httpx.ReadTimeout),

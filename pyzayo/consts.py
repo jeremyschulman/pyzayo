@@ -4,6 +4,10 @@ This file contains _constants_ used by this package.
 
 from enum import Enum
 
+# Environment variables
+
+Env = {"client_id": "ZAYO_CLIENT_ID", "client_secret": "ZAYO_CLIENT_SECRET"}
+
 # URL for authorizing client crendentials and obtaining an access token
 ZAYO_URL_AUTH = "https://auth.testzayo.com/oauth/token"
 
@@ -41,32 +45,48 @@ class OrderBy(Enum):
     Used for any API supporting the `orderBy` criteria
     """
 
-    most_recent = "primaryDate desc"
-    least_recent = "primaryDate asc"
+    date_later = "primaryDate desc"
+    date_sooner = "primaryDate asc"
 
 
-class CaseUrgency(Enum):
+class CaseUrgencyOptions(str, Enum):
     """
     Used by the Cases `urgency` field
     """
+
     planned = "Planned"
     emergency = "Emergency"
     demand = "Demand"
 
 
-class CaseStatus(Enum):
+class CaseStatusOptions(str, Enum):
     """
     Used by case record `status` field
     """
+
+    new = "New"
+    in_review = "MR Review"
+    rejected = "MR Rejected"
+    impact_fe_in_review = "Impact FE Review"
+    impact_fe_complete = "Impact FE Complete"
+    pending_schedule = "MR Pending Schedule"
+    schedule_in_progress = "Scheduling in Progress"
+    started = "Maint Started"
+    stopped = "Maint Stopped"
+    completed = "Maint Completed"
+    rescheduled = "Rescheduled"
+    cancelled = "Cancelled"
     closed = "Closed"
+    on_hold_bcdr = "On-Hold BCDR"
+    on_hold = "On-Hold"
     scheduled = "Scheduled"
+    COVID = "COVID"
 
 
-class CaseImpact(Enum):
+class CaseImpactOptions(Enum):
     potential_svc_aff = "Potential Service Affecting"
     svc_aff = "Service Affecting"
 
 
-REQ_MOST_RECENT = {"paging": {"top": 1}, "orderBy": [OrderBy.most_recent.value]}
-
-REQ_OLDEST = {"paging": {"top": 1}, "orderBy": [OrderBy.least_recent.value]}
+REQ_MOST_RECENT = {"paging": {"top": 1}, "orderBy": [OrderBy.date_later.value]}
+REQ_OLDEST = {"paging": {"top": 1}, "orderBy": [OrderBy.date_sooner.value]}

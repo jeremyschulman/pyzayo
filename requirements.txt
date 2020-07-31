@@ -1,5 +1,8 @@
-httpx
-tenacity
-click
-tabulate
-rich
+httpx~=0.13.3
+pydantic~=1.6.1
+tenacity~=6.2.0
+click~=7.1.2
+rich~=4.2.1
+first~=2.0.2
+maya~=0.6.1
+invoke~=1.4.1
