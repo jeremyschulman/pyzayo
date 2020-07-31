@@ -1,7 +1,7 @@
 # Python client for Zayo API
 
 This package provides a python 3.8 asyncio based client to access the Zayo
-API system.  
+API system.
 
 This package also includes a CLI tool `zayocli` that can be used to access and
 display the Zayo Maintenance API features.
@@ -24,10 +24,10 @@ You must obtain these values from Zayo.
 # Quick Start
 
 ```python
-from pyzayo import ZayoMtcClient
+from pyzayo import ZayoMatenanceMixin
 
 # create a client to the Maintenace API authenticate using the ZAYO_ variables
-zmtc = ZayoMtcClient()
+zmtc = ZayoMatenanceMixin()
 
 # use the instance methods to retrieve data
 cases = zmtc.get_cases()
@@ -35,4 +35,4 @@ cases = zmtc.get_cases()
 
 # Documentation
 
-For now the [ZayoMtcClient](https://github.com/jeremyschulman/pyzayo/blob/master/pyzayo/mtc_client.py#L45) docstrings.  More docs coming soon.
+For now the [ZayoMatenanceMixin](https://github.com/jeremyschulman/pyzayo/blob/master/pyzayo/mtc_client.py#L45) docstrings.  More docs coming soon.

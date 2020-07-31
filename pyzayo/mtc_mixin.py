@@ -25,14 +25,14 @@ from first import first
 # Private Imports
 # -----------------------------------------------------------------------------
 
-from pyzayo.client import ZayoClient
+from pyzayo.base_client import ZayoClientBase
 from pyzayo import consts
 
 # -----------------------------------------------------------------------------
 # Package Exports
 # -----------------------------------------------------------------------------
 
-__all__ = ["ZayoMtcClient"]
+__all__ = ["ZayoMatenanceMixin"]
 
 
 # -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ __all__ = ["ZayoMtcClient"]
 # -----------------------------------------------------------------------------
 
 
-class ZayoMtcClient(ZayoClient):
+class ZayoMatenanceMixin(ZayoClientBase):
     """
     This class defines the Zayo Maintenace API client instance.
 
@@ -52,9 +52,9 @@ class ZayoMtcClient(ZayoClient):
     http://54.149.224.75/wp-content/uploads/2020/03/Maintenance-Cases-Wiki.pdf
     """
 
-    def __init__(self):
-        """ setup client to use the Maintenace base URL """
-        super(ZayoMtcClient, self).__init__(base_url=consts.ZAYO_URL_SM)
+    # def __init__(self):
+    #     """ setup client to use the Maintenace base URL """
+    #     super(ZayoMatenanceMixin, self).__init__(base_url=consts.ZAYO_URL_SM)
 
     def get_cases(self, **params) -> List[Dict]:
         """

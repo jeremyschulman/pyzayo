@@ -1,1 +1,1 @@
-from pyzayo.mtc_client import ZayoMtcClient  # noqa
+from pyzayo.client import ZayoClient  # noqa
