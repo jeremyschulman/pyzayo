@@ -11,6 +11,7 @@ References
 # System Imports
 # -----------------------------------------------------------------------------
 
+from typing import List
 from operator import attrgetter
 
 # -----------------------------------------------------------------------------
@@ -40,6 +41,7 @@ from pyzayo.consts import CaseStatusOptions
 
 
 def colorize_urgency(urgency: str):
+    """ set the text style for case.urgency field """
     style = {
         consts.CaseUrgencyOptions.emergency: "bold red",
         consts.CaseUrgencyOptions.demand: "bright_blue",
@@ -52,6 +54,7 @@ def colorize_urgency(urgency: str):
 
 
 def colorize_status(status):
+    """ set the text style for case.status field"""
     return Text(
         status,
         style={CaseStatusOptions.scheduled: "bright_yellow"}.get(
@@ -61,6 +64,7 @@ def colorize_status(status):
 
 
 def colorize_impact(impact):
+    """ set the text style for case.impact field """
     style = {
         consts.CaseImpactOptions.potential_svc_aff: "",
         consts.CaseImpactOptions.svc_aff: "bold red",
@@ -71,7 +75,19 @@ def colorize_impact(impact):
     return Text("\n".join(impact.split()), style=style)
 
 
-def make_cases_table(recs):
+def make_cases_table(recs: List[CaseRecord]) -> Table:
+    """
+    This function creates the Rich.Table that contains the cases information.
+
+    Parameters
+    ----------
+    recs: List[CaseRecord]
+        The list of case records in model-object form.
+
+    Returns
+    -------
+    The rendered Table of case information.
+    """
     n_cases = len(recs)
     title = f"Cases ({n_cases})" if n_cases > 1 else "Case"
     table = Table(
@@ -120,7 +136,19 @@ def make_cases_table(recs):
     return table
 
 
-def make_impacts_table(impacts):
+def make_impacts_table(impacts: List[dict]) -> Table:
+    """
+    This function creates the Rich.Table that contains the case impact information.
+
+    Parameters
+    ----------
+    impacts: List[dict]
+        The list of case impact records in API dict form.
+
+    Returns
+    -------
+    The rendered Table of case impact information.
+    """
     table = Table(
         show_header=True,
         header_style="bold magenta",
@@ -150,7 +178,18 @@ def make_impacts_table(impacts):
 
 
 def make_notifs_table(notifs):
+    """
+    This function creates the Rich.Table that contains the case notification information.
 
+    Parameters
+    ----------
+    notifs: List[dict]
+        The list of case impact records in API dict form.
+
+    Returns
+    -------
+    The rendered Table of case notifications information.
+    """
     table = Table(
         show_header=True,
         header_style="bold magenta",

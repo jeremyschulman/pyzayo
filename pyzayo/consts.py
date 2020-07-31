@@ -84,6 +84,10 @@ class CaseStatusOptions(str, Enum):
 
 
 class CaseImpactOptions(Enum):
+    """
+    Used by Case record impact field.
+    """
+
     potential_svc_aff = "Potential Service Affecting"
     svc_aff = "Service Affecting"
 

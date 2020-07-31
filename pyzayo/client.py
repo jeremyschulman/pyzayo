@@ -1,3 +1,7 @@
+"""
+This file contains the ZayoClient base class that is used when subclassing
+specific API functional areas, such as maintenance.
+"""
 # -----------------------------------------------------------------------------
 # System Imports
 # -----------------------------------------------------------------------------
@@ -19,12 +23,11 @@ from tenacity import retry, wait_random_exponential, retry_if_exception
 # Private Imports
 # -----------------------------------------------------------------------------
 
-
 from pyzayo import consts
 from pyzayo.api import ZayoAPI
 
 # -----------------------------------------------------------------------------
-# Package Exports
+# Module Exports
 # -----------------------------------------------------------------------------
 
 __all__ = ["ZayoClient"]
@@ -44,12 +47,14 @@ class ZayoClient(object):
     """
 
     def __init__(self, base_url: str):
+        """ authorize to the ZAYO API and setup for the mainteance functioanl area """
         self._auth_payload: Optional[dict] = None
         self.authenticate()
         self.api = ZayoAPI(base_url=base_url, access_token=self.access_token)
 
     @property
     def access_token(self):
+        """ returns the current access token value """
         return self._auth_payload["access_token"]
 
     def authenticate(self):
@@ -161,6 +166,7 @@ class ZayoClient(object):
             wait=wait_random_exponential(multiplier=1, max=10),
         )
         async def get_page(payload):
+            """ get a page and retry if exception """
             return await self.api.post(url, json=payload)
 
         for page in range(total_pages):

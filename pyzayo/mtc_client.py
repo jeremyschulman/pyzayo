@@ -75,6 +75,18 @@ class ZayoMtcClient(ZayoClient):
         return self.paginate_records(url=consts.ZAYO_SM_ROUTE_MTC_CASES, **params)
 
     def get_case(self, by_case_num: str) -> Dict:
+        """
+        This method will return the specific case record identified `by_case_num`.
+
+        Parameters
+        ----------
+        by_case_num: str
+            The case number
+
+        Returns
+        -------
+        The record dictionary as defined by the API.
+        """
         recs = self.paginate_records(
             url=consts.ZAYO_SM_ROUTE_MTC_CASES, filter={"caseNumber": by_case_num}
         )
