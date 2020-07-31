@@ -103,8 +103,7 @@ def make_cases_table(recs):
 
         rec_pdates = sorted(pd for pd in pdates(row_obj) if pd)
         md = maya.parse(rec_pdates[0])
-        dstr = ("\n".join(map(str, rec_pdates)) +
-                f"\n({md.slang_time()})")
+        dstr = "\n".join(map(str, rec_pdates)) + f"\n({md.slang_time()})"
 
         table.add_row(
             row_obj.case_num,
@@ -205,9 +204,10 @@ def mtc_cases():
     zapi = ZayoMtcClient()
     recs = [
         rec
-        for rec in map(CaseRecord.parse_obj, zapi.get_cases(
-            orderBy=[consts.OrderBy.date_sooner.value]
-        ))
+        for rec in map(
+            CaseRecord.parse_obj,
+            zapi.get_cases(orderBy=[consts.OrderBy.date_sooner.value]),
+        )
         if rec.status != CaseStatusOptions.closed
     ]
     console = Console()
