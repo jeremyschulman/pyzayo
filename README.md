@@ -35,4 +35,4 @@ cases = zmtc.get_cases()
 
 # Documentation
 
-For now the ZayoMtClient docstrings.  More docs coming soon.
+For now the [ZayoMtcClient](https://github.com/jeremyschulman/pyzayo/blob/master/pyzayo/mtc_client.py#L45) docstrings.  More docs coming soon.
