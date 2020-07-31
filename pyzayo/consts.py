@@ -49,7 +49,7 @@ class OrderBy(Enum):
     least_recent = "primaryDate asc"
 
 
-class CaseUrgency(Enum):
+class CaseUrgencyOptions(Enum):
     """
     Used by the Cases `urgency` field
     """
@@ -59,16 +59,31 @@ class CaseUrgency(Enum):
     demand = "Demand"
 
 
-class CaseStatus(Enum):
+class CaseStatusOptions(Enum):
     """
     Used by case record `status` field
     """
 
+    new = "New"
+    in_review = "MR Review"
+    rejected = "MR Rejected"
+    impact_fe_in_review = "Impact FE Review"
+    impact_fe_complete = "Impact FE Complete"
+    pending_schedule = "MR Pending Schedule"
+    schedule_in_progress = "Scheduling in Progress"
+    started = "Maint Started"
+    stopped = "Maint Stopped"
+    completed = "Maint Completed"
+    rescheduled = "Rescheduled"
+    cancelled = "Cancelled"
     closed = "Closed"
+    on_hold_bcdr = "On-Hold BCDR"
+    on_hold = "On-Hold"
     scheduled = "Scheduled"
+    COVID = "COVID"
 
 
-class CaseImpact(Enum):
+class CaseImpactOptions(Enum):
     potential_svc_aff = "Potential Service Affecting"
     svc_aff = "Service Affecting"
 

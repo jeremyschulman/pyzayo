@@ -40,19 +40,23 @@ def mtc():
 
 def colorize_urgency(urgency: str):
     style = {
-        consts.CaseUrgency.emergency: "bold red",
-        consts.CaseUrgency.demand: "bright_blue",
-        consts.CaseUrgency.planned: "bright_yellow",
-    }.get(consts.CaseUrgency(urgency))
+        consts.CaseUrgencyOptions.emergency: "bold red",
+        consts.CaseUrgencyOptions.demand: "bright_blue",
+        consts.CaseUrgencyOptions.planned: "bright_yellow",
+    }.get(
+        consts.CaseUrgencyOptions(urgency)
+    )  # noqa
 
     return Text(urgency, style=style)
 
 
 def colorize_impact(impact):
     style = {
-        consts.CaseImpact.potential_svc_aff: "",
-        consts.CaseImpact.svc_aff: "bold red",
-    }.get(consts.CaseImpact(impact))
+        consts.CaseImpactOptions.potential_svc_aff: "",
+        consts.CaseImpactOptions.svc_aff: "bold red",
+    }.get(
+        consts.CaseImpactOptions(impact)
+    )  # noqa
 
     return Text("\n".join(impact.split()), style=style)
 
@@ -83,7 +87,7 @@ def mtc_cases():
 
     for rec in recs:
         row_obj = mtc_models.CaseRecord.parse_obj(rec)
-        row_obj.urgency = colorize_urgency(row_obj.urgency)
+        row_obj.urgency = colorize_urgency(row_obj.urgency)  # noqa
         row_obj.impact = colorize_impact(row_obj.impact)
         table.add_row(
             row_obj.case_num,
