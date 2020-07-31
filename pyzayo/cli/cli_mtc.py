@@ -27,7 +27,7 @@ import maya
 # Private Imports
 # -----------------------------------------------------------------------------
 
-from pyzayo import ZayoMtcClient
+from pyzayo import ZayoClient
 from .cli_root import cli
 from pyzayo import consts
 from pyzayo.mtc_models import CaseRecord, ImpactRecord, NotificationDetailRecord
@@ -89,10 +89,12 @@ def make_cases_table(recs: List[CaseRecord]) -> Table:
     The rendered Table of case information.
     """
     n_cases = len(recs)
-    title = f"Cases ({n_cases})" if n_cases > 1 else "Case"
     table = Table(
-        title=title,
-        title_style="bright_white",
+        title=Text(
+            f"Cases ({n_cases})" if n_cases > 1 else "Case",
+            style="bright_white",
+            justify="left",
+        ),
         show_header=True,
         header_style="bold magenta",
         show_lines=True,
@@ -149,12 +151,17 @@ def make_impacts_table(impacts: List[dict]) -> Table:
     -------
     The rendered Table of case impact information.
     """
+    count = len(impacts)
+
     table = Table(
+        title=Text(
+            f"Impacts ({count})" if count > 1 else "Impact",
+            style="bright_white",
+            justify="left",
+        ),
         show_header=True,
         header_style="bold magenta",
         show_lines=True,
-        title=f"Impacts ({len(impacts)})",
-        title_style="bright_white",
     )
 
     table.add_column("Case #")
@@ -190,15 +197,19 @@ def make_notifs_table(notifs):
     -------
     The rendered Table of case notifications information.
     """
+    count = len(notifs)
     table = Table(
+        title=Text(
+            f"Notifications ({count})" if count > 1 else "Notification",
+            style="bright_white",
+            justify="left",
+        ),
         show_header=True,
         header_style="bold magenta",
         show_lines=True,
-        title=f"Notifications ({len(notifs)})",
-        title_style="bright_white",
     )
 
-    table.add_column("Id")
+    table.add_column("#")
     table.add_column("Type")
     table.add_column("Email Sent")
     table.add_column("Email Subject")
@@ -240,7 +251,7 @@ def mtc_cases():
     """
     Show listing of maintenance caess.
     """
-    zapi = ZayoMtcClient()
+    zapi = ZayoClient()
     recs = [
         rec
         for rec in map(
@@ -259,7 +270,7 @@ def mtc_case_details(case_number):
     """
     Show specific case details.
     """
-    zapi = ZayoMtcClient()
+    zapi = ZayoClient()
 
     # find the case by number
 
@@ -273,9 +284,9 @@ def mtc_case_details(case_number):
 
     # TODO raw dumping data for now ... need to make pretty.
 
-    console.print(f"Case [bold white]{case_number}[/bold white]: [bold green]Found")
-    console.print(make_cases_table([CaseRecord.parse_obj(case)]))
-    console.print(make_impacts_table(impacts))
-    console.print(make_notifs_table(notifs))
+    console.print(f"\nCase [bold white]{case_number}[/bold white]: [bold green]Found")
+    console.print("\n", make_cases_table([CaseRecord.parse_obj(case)]), "\n")
+    console.print(make_impacts_table(impacts), "\n")
+    console.print(make_notifs_table(notifs), "\n")
 
     # console.print(Syntax(code=json.dumps(case, indent=3), lexer_name="json"))

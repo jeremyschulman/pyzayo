@@ -21,6 +21,8 @@ ZAYO_SM_ROUTE_MTC_CASES = "maintenance-cases"
 ZAYO_SM_ROUTE_MTC_IMPACTS = "maintenance-impacts"
 ZAYO_SM_ROUTE_MTC_NOTIFS_BY_CASE = "maintenance-cases/{case_num}/notifications"
 ZAYO_SM_ROUTE_MTC_NOTIFS_BY_NAME = "maintenance-cases/notifications/{name}"
+ZAYO_SM_ROUTE_SERVICES = "existing-services"
+
 
 # The Zayo API has a maximum "top" count of 50 records
 MAX_TOP_COUNT = 50
@@ -94,3 +96,10 @@ class CaseImpactOptions(Enum):
 
 REQ_MOST_RECENT = {"paging": {"top": 1}, "orderBy": [OrderBy.date_later.value]}
 REQ_OLDEST = {"paging": {"top": 1}, "orderBy": [OrderBy.date_sooner.value]}
+
+
+class InventoryStatusOption(str, Enum):
+    """ serivce inventory.status field options """
+
+    active = "Active"
+    pending = "Pending Change"

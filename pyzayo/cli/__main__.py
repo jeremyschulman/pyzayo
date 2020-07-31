@@ -6,7 +6,9 @@ This file also servers to import each of the CLI components, which is why the
 import modules list below exist.
 """
 from .cli_root import cli
+
 from . import cli_mtc  # noqa
+from . import cli_svcinv  # noqa
 
 
 def main():
