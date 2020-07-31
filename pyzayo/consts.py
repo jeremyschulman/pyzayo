@@ -45,8 +45,8 @@ class OrderBy(Enum):
     Used for any API supporting the `orderBy` criteria
     """
 
-    most_recent = "primaryDate desc"
-    least_recent = "primaryDate asc"
+    date_later = "primaryDate desc"
+    date_sooner = "primaryDate asc"
 
 
 class CaseUrgencyOptions(str, Enum):
@@ -88,5 +88,5 @@ class CaseImpactOptions(Enum):
     svc_aff = "Service Affecting"
 
 
-REQ_MOST_RECENT = {"paging": {"top": 1}, "orderBy": [OrderBy.most_recent.value]}
-REQ_OLDEST = {"paging": {"top": 1}, "orderBy": [OrderBy.least_recent.value]}
+REQ_MOST_RECENT = {"paging": {"top": 1}, "orderBy": [OrderBy.date_later.value]}
+REQ_OLDEST = {"paging": {"top": 1}, "orderBy": [OrderBy.date_sooner.value]}

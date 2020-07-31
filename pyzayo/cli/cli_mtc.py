@@ -1,10 +1,12 @@
 """
+This file contains the CLI code for the maintenance commands.
 
 References
 ----------
-    Colors:
+    For the Rich package, colors are defined here:
     https://rich.readthedocs.io/en/latest/appendix/colors.html#appendix-colors
 """
+
 # -----------------------------------------------------------------------------
 # System Imports
 # -----------------------------------------------------------------------------
@@ -84,7 +86,7 @@ def make_cases_table(recs):
     table.add_column("Urgency")
     table.add_column("Status")
     table.add_column("Impact")
-    table.add_column("Primary Date")
+    table.add_column("Date(s)")
     table.add_column("Location", width=12, overflow="fold")
     table.add_column("Start Time")
     table.add_column("End Time")
@@ -99,12 +101,17 @@ def make_cases_table(recs):
             row_obj.impact = colorize_impact(row_obj.impact)
             row_obj.status = colorize_status(row_obj.status)
 
+        rec_pdates = sorted(pd for pd in pdates(row_obj) if pd)
+        md = maya.parse(rec_pdates[0])
+        dstr = ("\n".join(map(str, rec_pdates)) +
+                f"\n({md.slang_time()})")
+
         table.add_row(
             row_obj.case_num,
             row_obj.urgency,
             row_obj.status,
             row_obj.impact,
-            "\n".join(str(pd) for pd in pdates(row_obj) if pd),
+            dstr,
             row_obj.location,
             str(row_obj.from_time),
             str(row_obj.to_time),
@@ -198,7 +205,9 @@ def mtc_cases():
     zapi = ZayoMtcClient()
     recs = [
         rec
-        for rec in map(CaseRecord.parse_obj, zapi.get_cases())
+        for rec in map(CaseRecord.parse_obj, zapi.get_cases(
+            orderBy=[consts.OrderBy.date_sooner.value]
+        ))
         if rec.status != CaseStatusOptions.closed
     ]
     console = Console()
@@ -226,7 +235,7 @@ def mtc_case_details(case_number):
     # TODO raw dumping data for now ... need to make pretty.
 
     console.print(f"Case [bold white]{case_number}[/bold white]: [bold green]Found")
-    console.print(make_cases_table([case]))
+    console.print(make_cases_table([CaseRecord.parse_obj(case)]))
     console.print(make_impacts_table(impacts))
     console.print(make_notifs_table(notifs))
 
