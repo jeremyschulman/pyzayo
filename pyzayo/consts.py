@@ -4,6 +4,13 @@ This file contains _constants_ used by this package.
 
 from enum import Enum
 
+# Environment variables
+
+Env = {
+    'client_id': 'ZAYO_CLIENT_ID',
+    'client_secret': 'ZAYO_CLIENT_SECRET'
+}
+
 # URL for authorizing client crendentials and obtaining an access token
 ZAYO_URL_AUTH = "https://auth.testzayo.com/oauth/token"
 
