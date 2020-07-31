@@ -37,7 +37,7 @@ zapi = ZayoClient()
 cases = zapi.get_cases()
 ```
 
-# Usage Documentation:
+# Usage Documentation
 **WORK IN PROGRESS** 
 
 For now, please use the docstrings by doing:
