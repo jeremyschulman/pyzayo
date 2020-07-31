@@ -49,7 +49,7 @@ class OrderBy(Enum):
     least_recent = "primaryDate asc"
 
 
-class CaseUrgencyOptions(Enum):
+class CaseUrgencyOptions(str, Enum):
     """
     Used by the Cases `urgency` field
     """
@@ -59,7 +59,7 @@ class CaseUrgencyOptions(Enum):
     demand = "Demand"
 
 
-class CaseStatusOptions(Enum):
+class CaseStatusOptions(str, Enum):
     """
     Used by case record `status` field
     """
