@@ -1,15 +1,15 @@
 # Python client for Zayo API
 
-This package provides a basic python 3.8 asyncio based client to access the Zayo
-API system.
+This package provides a python 3.8 asyncio based client to access the Zayo
+API system.  
+
+This package also includes a CLI tool `zayocli` that can be used to access and
+display the Zayo Maintenance API features.
 
 # Installation
 
-This package is not in PyPI as this time.  You can install it directly from
-github using:
-
 ```bash
-pip install -e git+https://github.com/jeremyschulman/pyzayo.git#egg=pyzayo
+pip install pyzayo
 ```
 
 # Before You Begin
