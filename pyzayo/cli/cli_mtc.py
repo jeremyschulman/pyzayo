@@ -107,6 +107,9 @@ def mtc_case_details(case_number):
     Show specific case details.
     """
     zapi = ZayoMtcClient()
+
+    # find the case by number
+
     case = zapi.get_case(by_case_num=case_number)
 
     console = Console()
@@ -114,6 +117,8 @@ def mtc_case_details(case_number):
     if not case:
         console.print(f"Case [bold white]{case_number}: [bold red]Not found")
         return
+
+    # TODO raw dumping data for now ... need to make pretty.
 
     console.print(f"Case [bold white]{case_number}[/bold white]: [bold green]Found")
     console.print(Syntax(code=json.dumps(case, indent=3), lexer_name="json"))
