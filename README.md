@@ -3,8 +3,12 @@
 This package provides a python 3.8 asyncio based client to access the Zayo
 API system.
 
-This package also includes a CLI tool `zayocli` that can be used to access and
-display the Zayo Maintenance API features.
+The following API functional areas are supported:
+   * Service Inventory
+   * Maintenance
+
+This package also includes a CLI tool `zayocli` to retrieve and display information
+obtained via the API.
 
 # Installation
 
@@ -33,6 +37,18 @@ zmtc = ZayoClient()
 cases = zmtc.get_cases()
 ```
 
-# Documentation
+# Usage Documentation:
 
-For now the [ZayoMatenanceMixin](https://github.com/jeremyschulman/pyzayo/blob/master/pyzayo/mtc_client.py#L45) docstrings.  More docs coming soon.
+**WORK IN PROGRESS** 
+
+For now, please use the docstrings by doing:
+```python
+from pyzayo import ZayoClient
+
+help(ZayoClient)
+```
+
+# Zayo API Documentation
+   * [Serivce Inventory](http://54.149.224.75/wp-content/uploads/2020/02/Service-Inventory-Wiki.pdf) 
+   * [Maintenance](http://54.149.224.75/wp-content/uploads/2020/03/Maintenance-Cases-Wiki.pdf) 
+
