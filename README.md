@@ -31,14 +31,13 @@ You must obtain these values from Zayo.
 from pyzayo import ZayoClient
 
 # create a client to the Maintenace API authenticate using the ZAYO_ variables
-zmtc = ZayoClient()
+zapi = ZayoClient()
 
 # use the instance methods to retrieve data
-cases = zmtc.get_cases()
+cases = zapi.get_cases()
 ```
 
 # Usage Documentation:
-
 **WORK IN PROGRESS** 
 
 For now, please use the docstrings by doing:
