@@ -47,6 +47,52 @@ from pyzayo import ZayoClient
 help(ZayoClient)
 ```
 
+# CLI Tool
+
+The `zayocli` tool supports the maintenance cases and service inventory features:
+
+```shell
+Usage: zayocli [OPTIONS] COMMAND [ARGS]...
+
+  Zayo CLI tool to access information via the API.
+
+Options:
+  --version  Show the version and exit.
+  --help     Show this message and exit.
+
+Commands:
+  cases     Maintenance commands.
+  services  Inventory Service commands.
+```
+
+**cases subcommand**
+
+```bash
+Usage: zayocli cases [OPTIONS] COMMAND [ARGS]...
+
+  Maintenance commands.
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  list          Show listing of maintenance caess.
+  show-details  Show specific case details.
+```
+
+**services subcommand**
+```shell
+Usage: zayocli services [OPTIONS] COMMAND [ARGS]...
+
+  Inventory Service commands.
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  list  List service inventory.
+```
+
 # Zayo API Documentation
    * [Serivce Inventory](http://54.149.224.75/wp-content/uploads/2020/02/Service-Inventory-Wiki.pdf)
    * [Maintenance](http://54.149.224.75/wp-content/uploads/2020/03/Maintenance-Cases-Wiki.pdf)
