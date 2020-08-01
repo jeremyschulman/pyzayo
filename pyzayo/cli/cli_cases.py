@@ -11,7 +11,7 @@ References
 # System Imports
 # -----------------------------------------------------------------------------
 
-from typing import List
+from typing import List, Dict
 from operator import attrgetter
 
 # -----------------------------------------------------------------------------
@@ -238,7 +238,7 @@ def make_notifs_table(notifs):
 # -----------------------------------------------------------------------------
 
 
-@cli.group()
+@cli.group("cases")
 def mtc():
     """
     Maintenance commands.
@@ -246,7 +246,7 @@ def mtc():
     pass
 
 
-@mtc.command(name="cases")
+@mtc.command(name="list")
 def mtc_cases():
     """
     Show listing of maintenance caess.
@@ -264,16 +264,17 @@ def mtc_cases():
     console.print(make_cases_table(recs))
 
 
-@mtc.command(name="case-details")
+@mtc.command(name="show-details")
 @click.argument("case_number")
-def mtc_case_details(case_number):
+@click.option("--save-emails", "-E", is_flag=True, help="Save notification emails")
+def mtc_case_details(case_number, save_emails):
     """
     Show specific case details.
     """
-    zapi = ZayoClient()
 
     # find the case by number
 
+    zapi = ZayoClient()
     case, impacts, notifs = zapi.get_case_details(by_case_num=case_number)
 
     console = Console()
@@ -282,11 +283,25 @@ def mtc_case_details(case_number):
         console.print(f"Case [bold white]{case_number}: [bold red]Not found")
         return
 
-    # TODO raw dumping data for now ... need to make pretty.
-
     console.print(f"\nCase [bold white]{case_number}[/bold white]: [bold green]Found")
     console.print("\n", make_cases_table([CaseRecord.parse_obj(case)]), "\n")
     console.print(make_impacts_table(impacts), "\n")
     console.print(make_notifs_table(notifs), "\n")
 
-    # console.print(Syntax(code=json.dumps(case, indent=3), lexer_name="json"))
+    if save_emails:
+        _save_notif_emails(notifs)
+
+
+# -----------------------------------------------------------------------------
+#
+#                               MODULE FUNCTIONS
+#
+# -----------------------------------------------------------------------------
+
+
+def _save_notif_emails(notifs: List[Dict]) -> None:
+    """ save each notification email to a file as <name>.html """
+    for notif in notifs:
+        with open(notif["name"] + ".html", "w+") as ofile:
+            ofile.write(notif["emailBody"])
+            print(f"Email saved: {ofile.name}")

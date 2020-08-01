@@ -10,6 +10,7 @@ References
 # -----------------------------------------------------------------------------
 # System Imports
 # -----------------------------------------------------------------------------
+
 from typing import List, Dict
 
 # -----------------------------------------------------------------------------
@@ -41,6 +42,14 @@ class ZayoServiceInventoryMixin(ZayoClientBase):
 
         Other Parameters
         ----------------
-        key-value options as defined by the "existing-services" API endpoint
+        key-value options as defined by the "existing-services" API endpoint.
+
+        The `filter` parameter, for example, supports the following
+        API record fields:
+           * status
+           * productGroup
+           * productCatagory
+           * product
+           * term
         """
         return self.paginate_records(url=ZAYO_SM_ROUTE_SERVICES, **params)

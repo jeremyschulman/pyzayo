@@ -105,7 +105,7 @@ def make_services_table(services: List[Dict]) -> Table:
 # -----------------------------------------------------------------------------
 
 
-@cli.group()
+@cli.group("services")
 def svc():
     """ Inventory Service commands. """
     pass

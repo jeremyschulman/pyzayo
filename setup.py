@@ -46,9 +46,11 @@ setup(
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: Apache Software License",
+        "Intended Audience :: Customer Service",
+        "Intended Audience :: Information Technology",
         "Programming Language :: Python :: 3.8",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: System :: Networking",
+        "License :: OSI Approved :: Apache Software License",
     ],
 )
