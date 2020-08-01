@@ -38,7 +38,7 @@ cases = zapi.get_cases()
 ```
 
 # Usage Documentation
-**WORK IN PROGRESS** 
+**WORK IN PROGRESS**
 
 For now, please use the docstrings by doing:
 ```python
@@ -48,6 +48,6 @@ help(ZayoClient)
 ```
 
 # Zayo API Documentation
-   * [Serivce Inventory](http://54.149.224.75/wp-content/uploads/2020/02/Service-Inventory-Wiki.pdf) 
-   * [Maintenance](http://54.149.224.75/wp-content/uploads/2020/03/Maintenance-Cases-Wiki.pdf) 
+   * [Serivce Inventory](http://54.149.224.75/wp-content/uploads/2020/02/Service-Inventory-Wiki.pdf)
+   * [Maintenance](http://54.149.224.75/wp-content/uploads/2020/03/Maintenance-Cases-Wiki.pdf)
 

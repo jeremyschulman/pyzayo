@@ -238,7 +238,7 @@ def make_notifs_table(notifs):
 # -----------------------------------------------------------------------------
 
 
-@cli.group()
+@cli.group("cases")
 def mtc():
     """
     Maintenance commands.
@@ -246,7 +246,7 @@ def mtc():
     pass
 
 
-@mtc.command(name="cases")
+@mtc.command(name="list")
 def mtc_cases():
     """
     Show listing of maintenance caess.

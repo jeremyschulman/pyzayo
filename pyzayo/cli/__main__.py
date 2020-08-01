@@ -7,8 +7,8 @@ import modules list below exist.
 """
 from .cli_root import cli
 
-from . import cli_mtc  # noqa
-from . import cli_svcinv  # noqa
+from . import cli_cases  # noqa
+from . import cli_services  # noqa
 
 
 def main():
