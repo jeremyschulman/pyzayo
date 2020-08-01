@@ -271,10 +271,10 @@ def mtc_case_details(case_number, save_emails):
     """
     Show specific case details.
     """
-    zapi = ZayoClient()
 
     # find the case by number
 
+    zapi = ZayoClient()
     case, impacts, notifs = zapi.get_case_details(by_case_num=case_number)
 
     console = Console()
@@ -282,8 +282,6 @@ def mtc_case_details(case_number, save_emails):
     if not case:
         console.print(f"Case [bold white]{case_number}: [bold red]Not found")
         return
-
-    # TODO raw dumping data for now ... need to make pretty.
 
     console.print(f"\nCase [bold white]{case_number}[/bold white]: [bold green]Found")
     console.print("\n", make_cases_table([CaseRecord.parse_obj(case)]), "\n")
