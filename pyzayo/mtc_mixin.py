@@ -14,6 +14,7 @@ API documentation:
 
 from typing import List, Dict
 import asyncio
+import re
 
 # -----------------------------------------------------------------------------
 # Public Imports
@@ -155,7 +156,7 @@ class ZayoMatenanceMixin(ZayoClientBase):
         if by_case_num:
             req_filter = dict(caseNumber=by_case_num)
         elif by_circuit_id:
-            req_filter = dict(circuitId=by_circuit_id)
+            req_filter = dict(circuitId=self.format_circuit_id(by_circuit_id))
         else:
             req_filter = {}
 
@@ -211,3 +212,24 @@ class ZayoMatenanceMixin(ZayoClientBase):
         res.raise_for_status()
         body = res.json()
         return body["data"]
+
+    @staticmethod
+    def format_circuit_id(circuit_id):
+        """
+        This function transforms a given circuit ID string value that may or may not
+        be delimited with the "/" marks and return the value in a Zayo API expected
+        format that is /4/6/3/4/ values.
+
+        Parameters
+        ----------
+        circuit_id: str
+            The User circuit ID input value
+
+        Returns
+        -------
+        The Zapo API circuit ID formatted value
+        """
+        cir_re = re.compile(r"/?(\w{4})/(\d{6})/(.{,3})/(.{,4})/?")
+        mo = cir_re.match(circuit_id)
+        groups = mo.groups()
+        return f"/{groups[0]:4}/{groups[1]:6}/{groups[2]:3}/{groups[3]:4}/"

@@ -270,11 +270,13 @@ def mtc():
 
 
 @mtc.command(name="list")
-def mtc_cases():
+@click.option("--circuit-id", help="filter case by circuit ID")
+def mtc_cases(circuit_id):
     """
     Show listing of maintenance caess.
     """
     zapi = ZayoClient()
+
     recs = [
         rec
         for rec in map(
@@ -283,6 +285,21 @@ def mtc_cases():
         )
         if rec.status != CaseStatusOptions.closed
     ]
+
+    # if circuit_id was provided by the User then we need to filter the case
+    # list by only those records that have an associated impact record with the
+    # same circuit_id value.
+
+    if circuit_id:
+        circuit_id = zapi.format_circuit_id(circuit_id)
+        impacted_case_nums = [
+            i_rec["caseNumber"]
+            for rec in recs
+            for i_rec in zapi.get_impacts(by_case_num=rec.case_num)
+            if i_rec["circuitId"] == circuit_id
+        ]
+        recs = [rec for rec in recs if rec.case_num in impacted_case_nums]
+
     console = Console(record=True)
     console.print(make_cases_table(recs))
     # console.save_html('cases.html', theme=HTML_SAVE_THEME)
