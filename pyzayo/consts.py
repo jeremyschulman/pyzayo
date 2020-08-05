@@ -29,17 +29,15 @@ MAX_TOP_COUNT = 50
 MAX_PAGED_RECORDS = 100
 
 
-class NotificationTypes(Enum):
-    """
-    Used by the notification API endpoints
-    """
+# -----------------------------------------------------------------------------
+#
+#                          Enumaration Constants
+#
+# -----------------------------------------------------------------------------
 
-    scheduled = "Scheduled"
-    rescheduled = "Rescheduled"
-    started = "Maintenance Started"
-    stopped = "Maintenance Stopped"
-    completed = "Maintenance Completed"
-    cancelled = "Cancelled"
+# -----------------------------------------------------------------------------
+#                           Request Options
+# -----------------------------------------------------------------------------
 
 
 class OrderBy(Enum):
@@ -51,6 +49,15 @@ class OrderBy(Enum):
     date_sooner = "primaryDate asc"
 
 
+REQ_MOST_RECENT = {"paging": {"top": 1}, "orderBy": [OrderBy.date_later.value]}
+REQ_OLDEST = {"paging": {"top": 1}, "orderBy": [OrderBy.date_sooner.value]}
+
+
+# -----------------------------------------------------------------------------
+#                           Cases API Endpoing
+# -----------------------------------------------------------------------------
+
+
 class CaseUrgencyOptions(str, Enum):
     """
     Used by the Cases `urgency` field
@@ -59,6 +66,9 @@ class CaseUrgencyOptions(str, Enum):
     planned = "Planned"
     emergency = "Emergency"
     demand = "Demand"
+    courtsey = "Courtesy"
+    off_schedule = "Off Schedule"
+    customer_initiated = "Customer Initiated"
 
 
 class CaseStatusOptions(str, Enum):
@@ -85,21 +95,54 @@ class CaseStatusOptions(str, Enum):
     COVID = "COVID"
 
 
-class CaseImpactOptions(Enum):
+class CaseImpactOptions(str, Enum):
     """
     Used by Case record impact field.
     """
 
     potential_svc_aff = "Potential Service Affecting"
     svc_aff = "Service Affecting"
+    non_svc_aff = "Non Service Affecting"
+    low_risk_fiber_splicing = "Low Risk Fiber splicing"
 
 
-REQ_MOST_RECENT = {"paging": {"top": 1}, "orderBy": [OrderBy.date_later.value]}
-REQ_OLDEST = {"paging": {"top": 1}, "orderBy": [OrderBy.date_sooner.value]}
+# -----------------------------------------------------------------------------
+#                           Notifiation API Endpoint
+# -----------------------------------------------------------------------------
+
+
+class NotificationTypes(str, Enum):
+    """ Used by the notification API endpoints """
+
+    scheduled = "Scheduled"
+    rescheduled = "Rescheduled"
+    started = "Maintenance Started"
+    stopped = "Maintenance Stopped"
+    completed = "Maintenance Completed"
+    cancelled = "Cancelled"
+
+
+class NotificationImpactOptions(str, Enum):
+    """ Used by the notification impacts endpoint """
+
+    hard_down = "Hard Down"
+    none = "No Expected Impact"
+    remove = "Remove"
+    switch_hits = "Switch Hit(s)"
+
+
+# -----------------------------------------------------------------------------
+#                           Service Inventory Endpoint
+# -----------------------------------------------------------------------------
 
 
 class InventoryStatusOption(str, Enum):
     """ serivce inventory.status field options """
 
     active = "Active"
-    pending = "Pending Change"
+    disconnected = "Disconnected"
+    billed = "Billed"
+    in_service = "In Service"
+    pending_change = "Pending Change"
+    pending_disconnet = "Pending Disconnect"
+    pending_install = "Partial Install"

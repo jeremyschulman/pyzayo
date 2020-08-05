@@ -90,7 +90,8 @@ Options:
   --help  Show this message and exit.
 
 Commands:
-  list  List service inventory.
+  circuit  Show service record for given circuit ID.
+  list     List service inventory.
 ```
 
 # Zayo API Documentation
