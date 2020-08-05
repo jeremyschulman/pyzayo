@@ -18,6 +18,7 @@ from typing import List, Dict
 # Public Imports
 # -----------------------------------------------------------------------------
 
+import click
 from rich.console import Console
 from rich.table import Table, Text
 
@@ -120,3 +121,20 @@ def cli_svc_inventory_list():
     svc_list = zapi.get_services()
     console = Console()
     console.print(make_services_table(services=svc_list))
+
+
+@svc.command(name="circuit")
+@click.argument('circuit_id')
+def cli_svc_by_circuit(circuit_id):
+    """
+    Show service record for given circuit ID.
+    """
+    zapi = ZayoClient()
+    cir_rec = zapi.get_service_by_circuit_id(circuit_id)
+
+    if not cir_rec:
+        print(f"Circuit not found: {circuit_id}")
+        return
+
+    console = Console()
+    console.print(make_services_table(services=[cir_rec]))
