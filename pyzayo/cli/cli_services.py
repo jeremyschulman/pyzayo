@@ -42,7 +42,7 @@ def colorize_status(status):
         status,
         style={
             InventoryStatusOption.active: "bright_green",
-            InventoryStatusOption.pending: "bright_yellow",
+            InventoryStatusOption.pending_change: "bright_yellow",
         }.get(status),
     )
 
