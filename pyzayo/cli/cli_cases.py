@@ -21,6 +21,8 @@ from operator import attrgetter
 import click
 from rich.console import Console
 from rich.table import Table, Text
+
+# from rich.console import TerminalTheme
 import maya
 
 # -----------------------------------------------------------------------------
@@ -231,6 +233,27 @@ def make_notifs_table(notifs):
     return table
 
 
+# HTML_SAVE_THEME = TerminalTheme(
+#     (0, 0, 0),
+#     (199, 199, 199),
+#     [(0, 0, 0),
+#      (201, 27, 0),
+#      (0, 194, 0),
+#      (199, 196, 0),
+#      (2, 37, 199),
+#      (202, 48, 199),
+#      (0, 197, 199),
+#      (199, 199, 199),
+#      (104, 104, 104)],
+#     [(255, 110, 103),
+#      (95, 250, 104),
+#      (255, 252, 103),
+#      (104, 113, 255),
+#      (255, 119, 255),
+#      (96, 253, 255),
+#      (255, 255, 255)]
+# )
+
 # -----------------------------------------------------------------------------
 #
 #                               CLI CODE BEGINS
@@ -260,8 +283,9 @@ def mtc_cases():
         )
         if rec.status != CaseStatusOptions.closed
     ]
-    console = Console()
+    console = Console(record=True)
     console.print(make_cases_table(recs))
+    # console.save_html('cases.html', theme=HTML_SAVE_THEME)
 
 
 @mtc.command(name="show-details")

@@ -102,4 +102,6 @@ class InventoryStatusOption(str, Enum):
     """ serivce inventory.status field options """
 
     active = "Active"
-    pending = "Pending Change"
+    pending_change = "Pending Change"
+    pending_disconnet = "Pending Disconnect"
+    pending_install = "Partial Install"
