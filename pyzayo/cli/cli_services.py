@@ -124,7 +124,7 @@ def cli_svc_inventory_list():
 
 
 @svc.command(name="circuit")
-@click.argument('circuit_id')
+@click.argument("circuit_id")
 def cli_svc_by_circuit(circuit_id):
     """
     Show service record for given circuit ID.
